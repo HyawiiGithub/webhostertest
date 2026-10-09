@@ -64,6 +64,24 @@ footer .f-title{font-family:Arial,Helvetica,sans-serif; font-weight:900; letter-
 footer a{color:var(--gold)}
 footer p{max-width:800px; margin:8px auto; font-size:16px}
 @media(max-width:640px){ #constitution-original{padding:6px 16px 24px} body{font-size:18px} .sec-label{margin:24px -16px 10px} }
+.langbar{display:flex; gap:0; justify-content:center; margin:12px auto 0; border:2px solid #141414; max-width:420px; background:#fff}
+.langbar span.lbl{font-family:Arial,Helvetica,sans-serif; font-size:11px; font-weight:700; letter-spacing:1px; padding:9px 10px; background:#141414; color:#e8b90f; text-transform:uppercase}
+.langbar button{flex:1; font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:13px; padding:9px 4px; cursor:pointer; background:#fff; border:0; border-right:2px solid #141414}
+.langbar button:last-child{border-right:0}
+.langbar button.on{background:var(--red); color:#fff}
+#google_translate_element{display:none !important}
+.goog-te-banner-frame{display:none !important}
+body{top:0 !important}
+#langPopup{position:fixed; inset:0; z-index:10000; display:none; align-items:center; justify-content:center; background:rgba(0,0,0,.65); padding:16px}
+#langPopup.show{display:flex}
+#langPopup .card{background:#f7f2e2; border:4px solid #141414; border-top:10px solid var(--red); max-width:440px; width:100%; padding:20px; text-align:center}
+#langPopup h4{font-family:Arial,Helvetica,sans-serif; font-size:17px; text-transform:uppercase; letter-spacing:1px; margin:0 0 4px}
+#langPopup p{font-size:15px; color:#555; margin:0 0 12px}
+#langPopup .opts{display:flex; border:2px solid #141414}
+#langPopup .opts button{flex:1; font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:14px; padding:12px 4px; background:#fff; border:0; border-right:2px solid #141414; cursor:pointer}
+#langPopup .opts button:last-child{border-right:0}
+#langPopup .opts button:hover{background:#141414; color:#e8b90f}
+#langPopup .skip{margin-top:10px; font-size:13px; text-decoration:underline; background:none; border:0; cursor:pointer; color:#555}
 </style>
 </head>
 <body>
@@ -81,9 +99,16 @@ footer p{max-width:800px; margin:8px auto; font-size:16px}
     <div class="emblem-credit">Staatswappen der DDR — <a href="https://commons.wikimedia.org/wiki/File:State_arms_of_the_German_Democratic_Republic.svg">Wikimedia Commons</a></div>
     <div class="poster-title">
       <h1>Verfassung <span class="red">der DDR</span></h1>
-      <h2>Constitution of the German Democratic Republic — Certified Transcript</h2>
+      <h2>Constitution of the German Democratic Republic</h2>
     </div>
     <div class="doc-meta">Berlin &nbsp;•&nbsp; Wortlaut unverändert &nbsp;•&nbsp; <b>Keine Änderung am Text</b></div>
+    <div class="langbar notranslate" id="langBar" role="group" aria-label="Language / Sprache / Язык">
+      <span class="lbl">Language</span>
+      <button data-lang="en" class="on">English</button>
+      <button data-lang="de">Deutsch</button>
+      <button data-lang="ru">Русский</button>
+    </div>
+    <div id="google_translate_element" class="notranslate" aria-hidden="true"></div>
   </div>
 </div>
 
@@ -113,11 +138,6 @@ footer p{max-width:800px; margin:8px auto; font-size:16px}
   </div>
 
   <div id="constitution-original">
-<p>&nbsp;</p>
-<!--<base target="haupt">-->
-<p>&nbsp;</p>
-<p align="center"><u><span style="font-size: small;"><a name="top"></a><br /><span dir="auto" style="vertical-align: inherit;"><span dir="auto" style="vertical-align: inherit;"> Constitution of the German Democratic Republic</span></span></span></u></p>
-<p align="center"><span dir="auto" style="vertical-align: inherit;"><span dir="auto" style="vertical-align: inherit;">of 25 July 2026 </span></span></p>
 <center>
 <p><span style="font-size: large;"><a name="0"></a><span dir="auto" style="vertical-align: inherit;"><span dir="auto" style="vertical-align: inherit;">Preamble</span></span></span></p>
 </center>
@@ -516,6 +536,54 @@ footer p{max-width:800px; margin:8px auto; font-size:16px}
   <p>Reformatted as a 1960s communist state document. All article wording preserved verbatim. Original anchors and the verfassungen.de “Top” link remain functional.</p>
   <p><a href="#top">▲ Nach oben / Back to top ▲</a> &nbsp;•&nbsp; <a href="https://www.verfassungen.de/ddr/verf74.htm#top">Original Top link target</a></p>
 </footer>
+
+
+<div id="langPopup" class="notranslate" role="dialog" aria-modal="true" aria-label="Choose language">
+  <div class="card">
+    <h4>★ Choose language ★</h4>
+    <p>Sprache wählen &nbsp;•&nbsp; Выберите язык</p>
+    <div class="opts">
+      <button data-lang="en">English</button>
+      <button data-lang="de">Deutsch</button>
+      <button data-lang="ru">Русский</button>
+    </div>
+    <button class="skip" id="langSkip">Continue in English →</button>
+  </div>
+</div>
+<script>
+function googleTranslateElementInit(){ try{ new google.translate.TranslateElement({pageLanguage:'en', includedLanguages:'en,de,ru', autoDisplay:false}, 'google_translate_element'); }catch(e){} }
+function __setGoogTrans(lang){
+  var v = (lang==='en') ? '' : ('/en/'+lang);
+  try{
+    document.cookie = 'googtrans='+v+'; path=/;';
+    document.cookie = 'googtrans='+v+'; domain='+location.hostname+'; path=/;';
+  }catch(e){}
+}
+function switchLang(lang){
+  try{ localStorage.setItem('ddr-lang', lang); }catch(e){}
+  document.querySelectorAll('#langBar button').forEach(function(b){ b.classList.toggle('on', b.dataset.lang===lang); });
+  __setGoogTrans(lang);
+  location.reload();
+}
+(function(){
+  var saved = null;
+  try{ saved = localStorage.getItem('ddr-lang'); }catch(e){}
+  if(saved && saved!=='en'){ document.querySelectorAll('#langBar button').forEach(function(b){ b.classList.toggle('on', b.dataset.lang===saved); }); }
+  var m = document.cookie.match(/googtrans=\/en\/(de|ru)/);
+  if(m){ document.querySelectorAll('#langBar button').forEach(function(b){ b.classList.toggle('on', b.dataset.lang===m[1]); }); }
+  document.querySelectorAll('#langBar button, #langPopup .opts button').forEach(function(b){
+    b.addEventListener('click', function(){ switchLang(b.dataset.lang); });
+  });
+  var pop = document.getElementById('langPopup'), skip = document.getElementById('langSkip');
+  var seen = null;
+  try{ seen = localStorage.getItem('ddr-lang-seen'); }catch(e){ seen='1'; }
+  if(!seen){ pop.classList.add('show'); }
+  function close(){ pop.classList.remove('show'); try{ localStorage.setItem('ddr-lang-seen','1'); }catch(e){} }
+  if(skip) skip.addEventListener('click', close);
+  pop.addEventListener('click', function(e){ if(e.target===pop) close(); });
+})();
+</script>
+<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 <script>
 (function(){
