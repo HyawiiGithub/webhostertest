@@ -8,124 +8,82 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root{
-  --paper:#e9e1c7; --paper2:#f3edd8; --ink:#1a1a1a; --red:#8e0f0f; --red2:#b31212;
-  --gold:#c69a1b; --black:#111; --grey:#5c5646; --line:#2b2b2b;
-}
+:root{ --paper:#efe8d2; --paper2:#f7f2e2; --ink:#141414; --red:#a50e0e; --gold:#e8b90f; --line:#141414; }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{
-  margin:0; background:#2e2c26;
-  color:var(--ink); font-family:'PT Serif', Georgia, 'Times New Roman', serif; font-size:19px; line-height:1.6;
-}
-.tricolor{display:flex; height:9px}
-.tricolor div{flex:1} .tricolor .b{background:#111} .tricolor .r{background:var(--red2)} .tricolor .g{background:#e8b90f}
-/* Masthead — like Gesetzblatt */
-.masthead{
-  background:var(--paper2); border-bottom:4px double var(--line);
-  padding:22px 18px 14px; text-align:center;
-}
-.masthead-inner{max-width:1000px; margin:0 auto}
-.amt{font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:3px; color:var(--grey); text-transform:uppercase}
-.emblem-row{display:flex; align-items:center; justify-content:center; gap:18px; margin:10px 0}
-.emblem-row .rule{flex:1; height:0; border-top:2px solid var(--line)}
-.emblem-row img{background:#f3edd8; border:1px solid var(--line); padding:6px}
-.emblem-credit{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--grey); margin:2px 0 0}
-.emblem-credit a{color:var(--grey)}
-h1.doc-title{
-  font-family:'Oswald', sans-serif; font-weight:700; text-transform:uppercase;
-  font-size:clamp(22px,4vw,40px); letter-spacing:1px; margin:8px 0 2px; color:#111;
-}
-h2.doc-sub{
-  font-family:'Oswald', sans-serif; font-weight:500; font-size:clamp(12px,2vw,17px);
-  letter-spacing:2px; text-transform:uppercase; color:var(--red); margin:0;
-}
-.doc-meta{font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--grey); margin-top:10px}
-.doc-meta b{color:var(--red); border:1px solid var(--red); padding:1px 7px}
-.stamp{
-  display:inline-block; font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:2px;
-  color:var(--red); border:2px solid var(--red); padding:4px 10px;
-  text-transform:uppercase; margin-top:8px;
-}
-/* Controls — Aktenreiter file tabs */
-.controls{
-  position:sticky; top:0; z-index:50; background:#22201a; color:var(--paper);
-  border-bottom:3px solid var(--gold); padding:10px 12px 0;
-}
+body{margin:0; background:#1c1a16; color:var(--ink); font-family:Georgia,'Times New Roman',serif; font-size:19px; line-height:1.6}
+.slogan{background:var(--red); color:#fff; text-align:center; font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:13px; letter-spacing:2px; padding:8px 10px; text-transform:uppercase}
+.tricolor{display:flex; height:7px}
+.tricolor div{flex:1} .tricolor .b{background:#111} .tricolor .r{background:var(--red)} .tricolor .g{background:var(--gold)}
+.masthead{background:var(--paper2); border-bottom:6px solid #141414; padding:0 0 16px; text-align:center}
+.masthead-inner{max-width:1000px; margin:0 auto; padding:18px 18px 0}
+.amt{font-family:Arial,Helvetica,sans-serif; font-size:11px; letter-spacing:3px; color:#555; text-transform:uppercase}
+.poster-title{border-top:6px solid #141414; border-bottom:6px solid #141414; margin:14px 0 0; padding:12px 8px; background:var(--paper)}
+.poster-title h1{font-family:Arial,Helvetica,sans-serif; font-weight:900; text-transform:uppercase; font-size:clamp(30px,6vw,58px); letter-spacing:1px; margin:6px 0 0; line-height:1}
+.poster-title h1 .red{color:var(--red)}
+.poster-title h2{font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:clamp(12px,2.2vw,16px); letter-spacing:2px; text-transform:uppercase; color:#141414; margin:6px 0 0}
+.emblem-row{display:flex; align-items:center; justify-content:center; gap:16px; margin:12px 0 4px}
+.emblem-row img{background:#fff; border:3px solid #141414; padding:8px; width:150px; height:150px; object-fit:contain}
+.emblem-credit{font-family:Arial,Helvetica,sans-serif; font-size:11px; color:#666}
+.emblem-credit a{color:#666}
+.doc-meta{font-family:Arial,Helvetica,sans-serif; font-size:12px; letter-spacing:1px; margin-top:10px; text-transform:uppercase}
+.doc-meta b{background:#141414; color:var(--gold); padding:2px 8px}
+.controls{position:sticky; top:0; z-index:50; background:#141414; border-bottom:4px solid var(--red); padding:10px 12px}
 .controls-inner{max-width:1100px; margin:0 auto}
-.tabs{display:flex; gap:6px; flex-wrap:wrap; align-items:flex-end; justify-content:center}
-button.tab{
-  font-family:'Oswald', sans-serif; font-size:13px; letter-spacing:1px; text-transform:uppercase;
-  background:#4a463a; color:#e9e1c7; border:1px solid #000; border-bottom:0;
-  padding:10px 14px; cursor:pointer;
-}
-button.tab small{font-family:'IBM Plex Mono', monospace; font-size:10px; opacity:.7; display:block; letter-spacing:1px}
-button.tab.active{background:var(--paper2); color:#111; border-top:3px solid var(--red)}
-button.tab:hover{background:#5c5747}
-.searchrow{display:flex; gap:10px; justify-content:center; align-items:center; padding:10px 0 8px; background:var(--paper2); border-left:1px solid #000; border-right:1px solid #000; flex-wrap:wrap}
-.searchrow input{
-  font-family:'IBM Plex Mono', monospace; font-size:15px; padding:7px 10px; width:min(440px,88vw);
-  background:#fffdf0; border:1px solid var(--line);
-}
-.searchrow .count{font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--grey); letter-spacing:1px}
-/* Index — Inhaltsverzeichnis */
-.paper{max-width:1100px; margin:0 auto; background:var(--paper); border-left:1px solid #000; border-right:1px solid #000}
-.index{padding:18px 26px 6px; border-bottom:2px solid var(--line)}
-.index h3{font-family:'Oswald', sans-serif; font-size:15px; letter-spacing:2px; text-transform:uppercase; margin:0 0 8px}
-.index h3 span{color:var(--red)}
-#indexGrid{display:flex; flex-wrap:wrap; gap:6px}
-#indexGrid a{
-  font-family:'IBM Plex Mono', monospace; font-size:12px; text-decoration:none; color:#111;
-  background:var(--paper2); border:1px solid var(--line); padding:4px 8px;
-}
-#indexGrid a:hover{background:var(--red); color:#fff; border-color:var(--red)}
-.index p{font-size:15px; color:var(--grey); font-style:italic}
-/* Constitution body */
-#constitution-original{padding:10px 34px 30px; background:var(--paper)}
-#constitution-original p, #constitution-original li{color:#1a1a1a !important}
-#constitution-original strong, #constitution-original b{color:#111 !important}
+.tabs{display:flex; gap:0; flex-wrap:wrap; justify-content:center; border:2px solid #000}
+button.tab{font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:13px; letter-spacing:1px; text-transform:uppercase; background:#fff; color:#141414; border:0; border-right:2px solid #141414; padding:10px 13px; cursor:pointer}
+button.tab:last-child{border-right:0}
+button.tab small{display:block; font-size:10px; font-weight:400; color:#666}
+button.tab.active{background:var(--red); color:#fff}
+button.tab.active small{color:#ffd9d9}
+.searchrow{display:flex; gap:10px; justify-content:center; align-items:center; padding:8px 0 2px; flex-wrap:wrap}
+.searchrow input{font-family:Arial,Helvetica,sans-serif; font-size:14px; padding:8px 10px; width:min(440px,88vw); background:#fff; border:2px solid #000}
+.searchrow .count{font-family:Arial,Helvetica,sans-serif; font-size:11px; color:#bbb; letter-spacing:1px}
+.paper{max-width:1100px; margin:0 auto; background:var(--paper); border-left:2px solid #000; border-right:2px solid #000}
+.index{padding:16px 24px 8px; border-bottom:4px solid #141414; background:var(--paper2)}
+.index h3{font-family:Arial,Helvetica,sans-serif; font-size:14px; letter-spacing:2px; text-transform:uppercase; margin:0 0 8px}
+#indexGrid{display:flex; flex-wrap:wrap; gap:0; border:2px solid #141414}
+#indexGrid a{font-family:Arial,Helvetica,sans-serif; font-weight:700; font-size:12px; text-decoration:none; color:#141414; background:#fff; border-right:1px solid #141414; border-bottom:1px solid #141414; padding:6px 9px}
+#indexGrid a:hover{background:#141414; color:var(--gold)}
+.index p{font-size:15px; color:#555; font-style:italic}
+#constitution-original{padding:6px 32px 30px; background:var(--paper)}
+#constitution-original p, #constitution-original li{color:#141414 !important}
+#constitution-original strong, #constitution-original b{color:#141414 !important}
 #constitution-original a[href]{color:var(--red) !important}
-#constitution-original a[name]{scroll-margin-top:150px}
+#constitution-original a[name]{scroll-margin-top:160px}
 #constitution-original span{color:inherit !important}
 #constitution-original span[style*="font-size"]{font-size:inherit !important}
 #constitution-original ol{margin:8px 0 14px 28px}
-.sec-label{
-  font-family:'Oswald', sans-serif; font-size:16px; letter-spacing:1.5px; text-transform:uppercase;
-  background:#111; color:#e8b90f; padding:9px 14px; margin:26px 0 8px; border-left:8px solid var(--red);
-}
-.sec-label small{font-family:'IBM Plex Mono', monospace; font-size:11px; color:#bbb; display:block; letter-spacing:1px}
-.art-card{
-  background:#fffdf0; border:1px solid var(--line); border-top:3px solid var(--red);
-  padding:14px 16px; margin:14px 0;
-}
+.sec-label{font-family:Arial,Helvetica,sans-serif; font-weight:900; font-size:19px; letter-spacing:1px; text-transform:uppercase; background:var(--red); color:#fff; padding:10px 14px; margin:28px -32px 10px; border-top:4px solid #141414; border-bottom:4px solid #141414}
+.sec-label small{font-size:12px; font-weight:400; display:block; letter-spacing:1px; color:#ffd9d9}
+.art-card{border-top:4px solid #141414; padding:12px 0 14px; margin:0}
 .art-card.hidden{display:none}
-.art-head{
-  font-family:'Oswald', sans-serif; font-size:14px; letter-spacing:1.5px; color:var(--red);
-  border-bottom:1px solid var(--line); padding-bottom:6px; margin-bottom:8px; text-transform:uppercase;
-}
-footer{background:#111; color:#c9c2ab; text-align:center; padding:26px 16px 34px; border-top:4px solid var(--gold)}
-footer .f-title{font-family:'Oswald', sans-serif; letter-spacing:2px; color:#e8b90f; text-transform:uppercase; font-size:15px}
-footer a{color:#e8b90f}
+.art-head{font-family:Arial,Helvetica,sans-serif; font-weight:900; font-size:15px; letter-spacing:1px; color:var(--red); text-transform:uppercase; margin-bottom:6px}
+footer{background:#141414; color:#d8d2bd; text-align:center; padding:24px 16px 32px; border-top:6px solid var(--red)}
+footer .f-title{font-family:Arial,Helvetica,sans-serif; font-weight:900; letter-spacing:2px; color:var(--gold); text-transform:uppercase; font-size:15px}
+footer a{color:var(--gold)}
 footer p{max-width:800px; margin:8px auto; font-size:16px}
-@media(max-width:640px){ #constitution-original{padding:10px 16px 24px} body{font-size:18px} }
+@media(max-width:640px){ #constitution-original{padding:6px 16px 24px} body{font-size:18px} .sec-label{margin:24px -16px 10px} }
 </style>
 </head>
 <body>
+<div class="slogan">Proletarier aller Länder, vereinigt euch!</div>
 <div class="tricolor"><div class="b"></div><div class="r"></div><div class="g"></div></div>
 
 <div class="masthead" id="top">
   <div class="masthead-inner">
-    <div class="amt">Deutsche Demokratische Republik &nbsp;•&nbsp; Gesetzblatt &nbsp;•&nbsp; Staatsverlag Berlin</div>
+    <div class="amt">Deutsche Demokratische Republik &nbsp;•&nbsp; Gesetzblatt &nbsp;•&nbsp; Staatsverlag Berlin &nbsp;•&nbsp; 1960s</div>
     <div class="emblem-row">
       <div class="rule"></div>
       <img src="emblem.svg" alt="Staatswappen der Deutschen Demokratischen Republik — State arms of the GDR" width="110" height="110">
       <div class="rule"></div>
     </div>
     <div class="emblem-credit">Staatswappen der DDR — <a href="https://commons.wikimedia.org/wiki/File:State_arms_of_the_German_Democratic_Republic.svg">Wikimedia Commons</a></div>
-    <h1 class="doc-title">Verfassung der DDR</h1>
-    <h2 class="doc-sub">Constitution of the German Democratic Republic — Certified Transcript</h2>
-    <div class="doc-meta">BERLIN &nbsp;•&nbsp; 1960s STATE DOCUMENT EDITION &nbsp;•&nbsp; <b>UNVERÄNDERT — NO TEXT ALTERED</b></div>
-    <div class="stamp">★ Geprüft — Wortlaut unverändert ★</div>
+    <div class="poster-title">
+      <h1>Verfassung <span class="red">der DDR</span></h1>
+      <h2>Constitution of the German Democratic Republic — Certified Transcript</h2>
+    </div>
+    <div class="doc-meta">Berlin &nbsp;•&nbsp; Wortlaut unverändert &nbsp;•&nbsp; <b>Keine Änderung am Text</b></div>
   </div>
 </div>
 
