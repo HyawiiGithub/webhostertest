@@ -1,3 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VERFASSUNG DDR 1980 // Constitution of the GDR — Arcade Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#ffce00; --red:#dd0000; --blk:#0a0a12; --cyan:#00fff9; --mag:#ff00e5;
+  --green:#39ff14; --paper:#f4ecd8; --cab:#151522;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--blk); color:var(--paper);
+  font-family:'VT323', 'Courier New', monospace; font-size:20px; line-height:1.45;
+  background-image:radial-gradient(circle at 50% -10%, #2a2a4a 0%, #0a0a12 60%);
+  min-height:100vh;
+}
+/* CRT overlays */
+.crt::before{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:9998;
+  background:repeating-linear-gradient(0deg, rgba(0,0,0,.22) 0 2px, transparent 2px 4px);
+  mix-blend-mode:multiply;
+}
+.crt::after{
+  content:""; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background:radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.55) 100%);
+}
+/* Flag bar */
+.flagbar{display:flex; height:10px}
+.flagbar div{flex:1}
+.flagbar .b{background:#000; border-bottom:1px solid #333}
+.flagbar .r{background:var(--red)} .flagbar .g{background:var(--gold)}
+/* Header arcade cabinet */
+.hud{
+  display:flex; justify-content:space-between; gap:8px; padding:8px 14px;
+  font-family:'Press Start 2P', monospace; font-size:10px; color:var(--cyan);
+  text-shadow:0 0 8px var(--cyan); background:#000; border-bottom:2px solid #222;
+  flex-wrap:wrap;
+}
+.hud .blink{animation:blink 1.1s steps(2) infinite; color:var(--gold); text-shadow:0 0 10px var(--gold)}
+@keyframes blink{50%{opacity:0}}
+header.title{
+  text-align:center; padding:26px 16px 14px; background:
+    linear-gradient(180deg, #1b1b2e 0%, #0a0a12 100%);
+  border-bottom:3px solid var(--gold);
+  position:relative; overflow:hidden;
+}
+header.title h1{
+  font-family:'Press Start 2P', monospace; font-size:clamp(16px,3.4vw,34px);
+  color:var(--gold); margin:10px 0 6px; letter-spacing:1px;
+  text-shadow:3px 3px 0 var(--red), 0 0 18px rgba(255,206,0,.6);
+}
+header.title h2{
+  font-family:'Press Start 2P', monospace; font-size:clamp(9px,1.8vw,13px);
+  color:#fff; font-weight:normal; margin:0 0 10px;
+  text-shadow:0 0 10px var(--mag);
+}
+.emblem{
+  display:inline-flex; align-items:center; gap:12px; justify-content:center;
+  border:2px solid var(--gold); padding:8px 16px; background:#000;
+  box-shadow:0 0 0 2px var(--red), 0 0 22px rgba(255,0,229,.35);
+}
+.ddr-arrows{font-size:22px; letter-spacing:6px}
+.ddr-arrows span{display:inline-block; animation:bounce 1s infinite alternate}
+.ddr-arrows span:nth-child(2){animation-delay:.15s; color:var(--cyan)}
+.ddr-arrows span:nth-child(3){animation-delay:.3s; color:var(--mag)}
+.ddr-arrows span:nth-child(4){animation-delay:.45s; color:var(--green)}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-6px)}}
+.subline{color:#bbb; font-size:19px; margin:8px 0 0}
+.subline b{color:var(--gold)}
+/* Ticker */
+.ticker{background:var(--red); color:#fff; overflow:hidden; white-space:nowrap; border-top:2px solid #000; border-bottom:2px solid #000; font-family:'Press Start 2P',monospace; font-size:10px; padding:8px 0}
+.ticker span{display:inline-block; padding-left:100%; animation:tick 28s linear infinite}
+@keyframes tick{to{transform:translateX(-100%)}}
+/* Controls */
+.controls{
+  position:sticky; top:0; z-index:50; background:rgba(10,10,18,.96);
+  border-bottom:3px solid var(--gold); padding:10px 12px; backdrop-filter:blur(4px);
+}
+.cat-row{display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin:6px 0}
+button.arcade{
+  font-family:'Press Start 2P', monospace; font-size:10px; color:#000;
+  background:var(--gold); border:0; border-radius:10px; padding:11px 13px; cursor:pointer;
+  box-shadow:0 4px 0 #7a5c00, 0 6px 0 #000, 0 0 12px rgba(255,206,0,.5);
+  text-transform:uppercase;
+}
+button.arcade:active{transform:translateY(4px); box-shadow:0 0 0 #000}
+button.arcade[data-filter="all"]{background:var(--green); box-shadow:0 4px 0 #145a08, 0 6px 0 #000}
+button.arcade[data-filter="sec1"]{background:var(--gold)}
+button.arcade[data-filter="sec2"]{background:var(--cyan); box-shadow:0 4px 0 #0a6b68, 0 6px 0 #000}
+button.arcade[data-filter="sec3"]{background:var(--mag); color:#fff; box-shadow:0 4px 0 #6b0a5e, 0 6px 0 #000}
+button.arcade[data-filter="sec4"]{background:#ff7b00; box-shadow:0 4px 0 #6b3400, 0 6px 0 #000}
+button.arcade[data-filter="sec5"]{background:#fff; box-shadow:0 4px 0 #777, 0 6px 0 #000}
+button.arcade[data-filter="preamble"]{background:var(--red); color:#fff; box-shadow:0 4px 0 #6b0000, 0 6px 0 #000}
+button.arcade.active{outline:3px solid #fff; outline-offset:2px}
+.searchbar{display:flex; gap:8px; justify-content:center; margin:8px 0; flex-wrap:wrap}
+.searchbar input{
+  font-family:'VT323',monospace; font-size:22px; padding:6px 12px; width:min(420px,90vw);
+  background:#000; color:var(--green); border:2px solid var(--green); border-radius:6px;
+  text-shadow:0 0 8px var(--green);
+}
+.count{font-family:'Press Start 2P',monospace; font-size:9px; color:#aaa; text-align:center}
+/* Article index grid */
+.index-wrap{max-width:1100px; margin:12px auto; padding:0 14px}
+.index-wrap h3{font-family:'Press Start 2P',monospace; font-size:11px; color:var(--cyan); text-shadow:0 0 8px var(--cyan)}
+#articleIndex{display:flex; flex-wrap:wrap; gap:6px}
+#articleIndex a{
+  font-family:'Press Start 2P',monospace; font-size:9px; text-decoration:none;
+  background:#1e1e32; color:var(--gold); border:1px solid var(--gold); border-radius:6px; padding:7px 8px;
+}
+#articleIndex a:hover{background:var(--gold); color:#000}
+/* Main cabinet */
+main.cabinet{max-width:1100px; margin:14px auto 40px; padding:0 14px}
+#constitution-original{
+  background:#0e0e1a; border:3px solid var(--gold); border-radius:12px; padding:22px 22px;
+  box-shadow:0 0 0 3px var(--red), 0 0 30px rgba(255,206,0,.25), inset 0 0 60px rgba(0,0,0,.7);
+}
+/* Style the ORIGINAL tags without changing text */
+#constitution-original p, #constitution-original li{
+  color:var(--paper) !important;
+}
+#constitution-original p{margin:12px 0}
+#constitution-original ol{margin:8px 0 14px 24px; padding:0}
+#constitution-original li{margin:6px 0; padding-left:4px}
+#constitution-original li::marker{color:var(--gold)}
+#constitution-original strong, #constitution-original b{color:var(--gold) !important}
+#constitution-original center{color:inherit}
+#constitution-original a[name]{scroll-margin-top:140px}
+#constitution-original a[href]{color:var(--cyan) !important; text-decoration:underline}
+/* Injected section wrappers (JS adds these, text untouched) */
+.sec-label{
+  font-family:'Press Start 2P',monospace; font-size:12px; color:#000; background:var(--gold);
+  display:inline-block; padding:8px 12px; border-radius:6px; margin:18px 0 6px;
+  box-shadow:0 3px 0 #7a5c00; border:2px solid #000;
+}
+.sec-label.sec2{background:var(--cyan)} .sec-label.sec3{background:var(--mag); color:#fff}
+.sec-label.sec4{background:#ff7b00} .sec-label.sec5{background:#fff}
+.sec-label.preamble{background:var(--red); color:#fff} .sec-label.all{background:var(--green)}
+.art-card{
+  border:2px solid #333; border-left:6px solid var(--gold); border-radius:8px;
+  background:#12121f; padding:12px 14px; margin:14px 0;
+  box-shadow:inset 0 0 24px rgba(0,0,0,.6);
+}
+.art-card.hidden{display:none}
+.art-card .art-head{
+  font-family:'Press Start 2P',monospace; font-size:12px; color:var(--red);
+  background:#000; display:inline-block; padding:6px 10px; border:1px solid var(--red); border-radius:6px;
+  text-shadow:0 0 8px var(--red); margin-bottom:8px;
+}
+.art-nav{display:flex; gap:8px; margin-top:8px}
+.art-nav button{
+  font-family:'Press Start 2P',monospace; font-size:9px; background:#222; color:var(--cyan);
+  border:1px solid var(--cyan); border-radius:6px; padding:7px 9px; cursor:pointer;
+}
+/* preserve original inline font-sizes but tame them */
+#constitution-original span[style*="font-size"]{font-size:inherit !important}
+#constitution-original span{color:inherit !important}
+footer{
+  text-align:center; padding:22px 14px 40px; background:#000; border-top:3px solid var(--gold);
+  font-size:19px; color:#aaa;
+}
+footer a{color:var(--cyan)}
+.insert{font-family:'Press Start 2P',monospace; font-size:10px; color:var(--green); text-shadow:0 0 10px var(--green); animation:blink 1s steps(2) infinite}
+@media(max-width:640px){
+  body{font-size:19px}
+  #constitution-original{padding:14px 12px}
+}
+</style>
+</head>
+<body class="crt">
+<div class="flagbar"><div class="b"></div><div class="r"></div><div class="g"></div></div>
+<div class="hud"><span>1UP&nbsp; HIGH SCORE 1980</span><span class="blink">&#9654; INSERT COIN &#9664;</span><span>BERLIN • DDR • CREDIT 01</span></div>
+
+<header class="title" id="top">
+  <div class="emblem">
+    <span style="font-size:28px">☭</span>
+    <span class="ddr-arrows"><span>◀</span><span>▲</span><span>▼</span><span>▶</span></span>
+    <span style="font-family:'Press Start 2P',monospace;font-size:11px;color:var(--gold)">DDR • 1980</span>
+    <span class="ddr-arrows"><span>◀</span><span>▲</span><span>▼</span><span>▶</span></span>
+    <span style="font-size:28px">☭</span>
+  </div>
+  <h1>VERFASSUNG DER DDR</h1>
+  <h2>CONSTITUTION OF THE GERMAN DEMOCRATIC REPUBLIC — ARCADE EDITION</h2>
+  <p class="subline">Same text. Same articles. Zero edits. Just a <b>1980 arcade cabinet</b> + category buttons. Use arrows like Dance Dance Revolution to stomp through the law.</p>
+  <p class="insert">▼ PRESS START — CHOOSE A CATEGORY BELOW ▼</p>
+</header>
+
+<div class="ticker"><span>★ SOCIALISM ★ PEACE ★ DEMOCRACY ★ FRIENDSHIP AMONG NATIONS ★ FROM EACH ACCORDING TO HIS ABILITY ★ BERLIN IS THE CAPITAL ★ 1980 ARCADE MODE ★ NO TEXT CHANGED ★&nbsp;</span></div>
+
+<div class="controls">
+  <div class="cat-row" id="catRow">
+    <button class="arcade active" data-filter="all">★ ALL</button>
+    <button class="arcade" data-filter="preamble">PREAMBLE</button>
+    <button class="arcade" data-filter="sec1">SEC I</button>
+    <button class="arcade" data-filter="sec2">SEC II</button>
+    <button class="arcade" data-filter="sec3">SEC III</button>
+    <button class="arcade" data-filter="sec4">SEC IV</button>
+    <button class="arcade" data-filter="sec5">SEC V</button>
+  </div>
+  <div class="searchbar">
+    <input id="q" type="search" placeholder="SEARCH articles... e.g. work, peace, vote" autocomplete="off">
+  </div>
+  <div class="count" id="count"></div>
+</div>
+
+<div class="index-wrap">
+  <h3>▓ ARTICLE SELECT — PRESS TO WARP ▓</h3>
+  <div id="articleIndex"></div>
+  <p style="color:#888;font-size:18px">Tip: every button jumps to the original anchor (e.g. #1, #48). Original <a href="https://www.verfassungen.de/ddr/verf74.htm#top" style="color:var(--cyan)">Top</a> link at the bottom still works. Nothing deleted.</p>
+</div>
+
+<main class="cabinet">
+  <div id="constitution-original">
 <p>&nbsp;</p>
 <!--<base target="haupt">-->
 <p>&nbsp;</p>
@@ -392,36 +610,156 @@
 <center><hr size="1" width="60%" />
 <p style="margin-top: 0; margin-bottom: 0;"><span style="font-family: Arial, Helvetica;">&nbsp; <a href="https://www.verfassungen.de/ddr/verf74.htm#top">Top</a></span></p>
 </center>
-<div id="goog-gt-tt" class="VIpgJd-yAWNEb-L7lbkb skiptranslate" style="display: none; border-radius: 12px; margin: 0 0 0 -23px; padding: 0; font-family: 'Google Sans', Arial, sans-serif;" data-id="">
-<div id="goog-gt-vt" class="VIpgJd-yAWNEb-hvhgNd">
-<div class="VIpgJd-yAWNEb-hvhgNd-Ud7fr"><img src="./Verfassung der Deutschen Demokratischen Republik (1974)_files/24px.svg" alt="" width="24" height="24" />
-<div class=" VIpgJd-yAWNEb-hvhgNd-IuizWc-i3jM8c " dir="ltr">Original text</div>
-</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-k77Iif">&nbsp;</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid ltr">
-<div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od ltr" dir="ltr">
-<div class="VIpgJd-yAWNEb-hvhgNd-UTujCb">Rate this translation</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-eO9mKe">Your feedback will be used to help improve Google Translate</div>
-</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-xgov5 ltr">&nbsp;</div>
-</div>
-<div id="goog-gt-votingHiddenPane" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><form id="goog-gt-votingForm" class="VIpgJd-yAWNEb-hvhgNd-aXYTce" action="https://translate.googleapis.com/translate_voting?client=te_lib" method="post" target="votingFrame"><input id="goog-gt-votingInputSrcLang" name="sl" type="text" /><input id="goog-gt-votingInputTrgLang" name="tl" type="text" /><input id="goog-gt-votingInputSrcText" name="query" type="text" /><input id="goog-gt-votingInputTrgText" name="gtrans" type="text" /><input id="goog-gt-votingInputVote" name="vote" type="text" /></form><iframe src="./Verfassung der Deutschen Demokratischen Republik (1974)_files/saved_resource.html" name="votingFrame" width="300" height="150" frameborder="0"></iframe></div>
-</div>
-</div>
-<div id="goog-gt-tt" class="VIpgJd-yAWNEb-L7lbkb skiptranslate" style="display: none; border-radius: 12px; margin: 0 0 0 -23px; padding: 0; font-family: 'Google Sans', Arial, sans-serif;" data-id="">
-<div id="goog-gt-vt" class="VIpgJd-yAWNEb-hvhgNd">
-<div class="VIpgJd-yAWNEb-hvhgNd-Ud7fr"><img src="https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg" alt="" width="24" height="24" />
-<div class=" VIpgJd-yAWNEb-hvhgNd-IuizWc-i3jM8c " dir="ltr">Original text</div>
-</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-k77Iif">&nbsp;</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid ltr">
-<div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od ltr" dir="ltr">
-<div class="VIpgJd-yAWNEb-hvhgNd-UTujCb">Rate this translation</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-eO9mKe">Your feedback will be used to help improve Google Translate</div>
-</div>
-<div class="VIpgJd-yAWNEb-hvhgNd-xgov5 ltr">&nbsp;</div>
-</div>
-<div id="goog-gt-votingHiddenPane" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><form id="goog-gt-votingForm" class="VIpgJd-yAWNEb-hvhgNd-aXYTce" action="//translate.googleapis.com/translate_voting?client=te_lib" method="post" target="votingFrame"><input id="goog-gt-votingInputSrcLang" name="sl" type="text" /><input id="goog-gt-votingInputTrgLang" name="tl" type="text" /><input id="goog-gt-votingInputSrcText" name="query" type="text" /><input id="goog-gt-votingInputTrgText" name="gtrans" type="text" /><input id="goog-gt-votingInputVote" name="vote" type="text" /></form><iframe name="votingFrame" width="300" height="150" frameborder="0"></iframe></div>
-</div>
-</div>
 
+  </div>
+</main>
+
+<footer>
+  <p class="insert">■ GAME OVER? NEVER — SOCIALISM CONTINUES ■</p>
+  <p>Formatted only — no article text changed. Original anchors preserved. Source: verfassungen.de DDR 1974 / adapted 2026.</p>
+  <p><a href="#top">▲ BACK TO TOP ▲</a> • <a href="https://www.verfassungen.de/ddr/verf74.htm#top">Original Top link target</a></p>
+</footer>
+
+<script>
+(function(){
+  var root = document.getElementById('constitution-original');
+  // Make old <a name=""> work as modern ids (preserves functionality, adds nothing visible)
+  root.querySelectorAll('a[name]').forEach(function(a){ if(!a.id) a.id = a.getAttribute('name'); });
+
+  // Walk top-level nodes and group into section blocks + article cards WITHOUT altering text.
+  // We only add wrapper SECTION elements around existing nodes.
+  var nodes = Array.prototype.slice.call(root.childNodes);
+  var currentSec = 'preamble';
+  function detectSec(text){
+    if(!text) return null;
+    var t = text.replace(/\s+/g,' ').trim();
+    if(/Section\s+V\b/i.test(t) && /Final/i.test(t)) return 'sec5';
+    if(/Section\s+IV\b/i.test(t)) return 'sec4';
+    if(/Section\s+III\b/i.test(t)) return 'sec3';
+    if(/Section\s+II\b/i.test(t)) return 'sec2';
+    if(/Section\s+I\b/i.test(t)) return 'sec1';
+    if(/^Preamble$/i.test(t)) return 'preamble';
+    return null;
+  }
+  // Clear root, rebuild with wrappers (move original nodes, do not clone/edit text)
+  root.innerHTML = '';
+  var secWrap = null, artCard = null, artNum = null;
+  function newSecWrap(sec){
+    secWrap = document.createElement('div');
+    secWrap.className = 'sec-block';
+    secWrap.dataset.section = sec;
+    var labels = {preamble:'▶ PREAMBLE / START', sec1:'▓ SECTION I — SOCIALIST ORDER', sec2:'▓ SECTION II — CITIZENS', sec3:'▓ SECTION III — STATE LEADERSHIP', sec4:'▓ SECTION IV — LEGALITY & JUSTICE', sec5:'▓ SECTION V — FINAL PROVISIONS', all:'ARCHIVE'};
+    var lab = document.createElement('div');
+    lab.className = 'sec-label ' + sec;
+    lab.textContent = labels[sec] || sec;
+    secWrap.appendChild(lab);
+    root.appendChild(secWrap);
+  }
+  function newArtCard(num){
+    artCard = document.createElement('section');
+    artCard.className = 'art-card';
+    artCard.dataset.section = currentSec;
+    if(num) artCard.dataset.article = num;
+    var head = document.createElement('div');
+    head.className = 'art-head';
+    head.textContent = num ? ('◆ ARTICLE ' + num + ' ◆') : '◆ TEXT ◆';
+    artCard.appendChild(head);
+    secWrap.appendChild(artCard);
+  }
+  newSecWrap(currentSec);
+  newArtCard(null);
+  var articleIndex = [];
+
+  nodes.forEach(function(n){
+    var txt = (n.textContent || '').replace(/\s+/g,' ').trim().slice(0,200);
+    var secHit = (n.nodeType===1) ? detectSec(n.textContent) : null;
+    // Section change: start new wrapper, move node inside (keep node intact)
+    if(secHit && secHit !== currentSec){
+      currentSec = secHit;
+      newSecWrap(currentSec);
+      newArtCard(null);
+    }
+    // Article change: detect "Article 12." at start of block
+    var m = (n.textContent||'').match(/Article\s+(\d+)\s*\./i);
+    if(n.nodeType===1 && m){
+      artNum = m[1];
+      // find anchor inside for warp link
+      var anc = n.querySelector ? n.querySelector('a[name]') : null;
+      var aid = anc ? anc.getAttribute('name') : artNum;
+      articleIndex.push({num: artNum, id: aid});
+      newArtCard(artNum);
+      if(anc && !artCard.id) artCard.id = 'card-' + aid;
+    }
+    // Also catch Preamble heading to index it
+    if(n.nodeType===1 && /^Preamble$/i.test((n.textContent||'').trim())){
+      articleIndex.unshift({num:'Preamble', id:'0'});
+    }
+    artCard.appendChild(n);
+  });
+
+  // Build article warp buttons (for each article, preserves original anchor navigation)
+  var idx = document.getElementById('articleIndex');
+  // dedupe
+  var seen = {};
+  articleIndex.forEach(function(a){
+    var key = a.num + '|' + a.id;
+    if(seen[key]) return; seen[key]=1;
+    var link = document.createElement('a');
+    link.href = '#' + a.id;
+    link.textContent = (a.num==='Preamble') ? 'START' : ('ART ' + a.num);
+    link.title = 'Jump to Article ' + a.num;
+    idx.appendChild(link);
+  });
+
+  // Category filter + search
+  var buttons = Array.prototype.slice.call(document.querySelectorAll('#catRow button'));
+  var q = document.getElementById('q');
+  var count = document.getElementById('count');
+  function apply(){
+    var active = document.querySelector('#catRow button.active').dataset.filter;
+    var term = (q.value||'').toLowerCase();
+    var shown = 0, total = 0;
+    document.querySelectorAll('.art-card').forEach(function(card){
+      total++;
+      var okSec = (active==='all') || (card.dataset.section===active);
+      var okQ = !term || (card.textContent.toLowerCase().indexOf(term)>-1);
+      var show = okSec && okQ;
+      card.classList.toggle('hidden', !show);
+      if(show) shown++;
+    });
+    document.querySelectorAll('.sec-block').forEach(function(sb){
+      var anyVisible = sb.querySelector('.art-card:not(.hidden)');
+      sb.style.display = anyVisible ? '' : 'none';
+    });
+    count.textContent = 'SHOWING ' + shown + ' / ' + total + ' BLOCKS // FILTER:' + active.toUpperCase();
+  }
+  buttons.forEach(function(b){
+    b.addEventListener('click', function(){
+      buttons.forEach(function(x){x.classList.remove('active')});
+      b.classList.add('active');
+      apply();
+      document.querySelector('main.cabinet').scrollIntoView({behavior:'smooth'});
+    });
+  });
+  q.addEventListener('input', apply);
+  apply();
+
+  // Konami-ish DDR arrow keys: left/right jump between article cards
+  var cards = function(){ return Array.prototype.slice.call(document.querySelectorAll('.art-card:not(.hidden)')); };
+  document.addEventListener('keydown', function(e){
+    if(e.key==='ArrowDown' || e.key==='ArrowRight'){
+      var c = cards(); if(!c.length) return;
+      var y = window.scrollY;
+      var nxt = c.find(function(el){ return el.getBoundingClientRect().top + window.scrollY > y + 160; });
+      if(nxt) nxt.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+    if(e.key==='ArrowUp' || e.key==='ArrowLeft'){
+      var c2 = cards(); var y2 = window.scrollY;
+      var prev = c2.reverse().find(function(el){ return el.getBoundingClientRect().top + window.scrollY < y2 - 40; });
+      if(prev) prev.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+  });
+})();
+</script>
+</body>
+</html>
